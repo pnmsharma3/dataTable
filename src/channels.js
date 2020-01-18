@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.scss';
 import { getChannels, getPrograms } from './request';
 import DataTable from './DataTable';
-
 const perPage = 5;
 const quarterHours = ['00', '15', '30', '45'];
 
@@ -11,7 +9,7 @@ const times = [...Array(24).keys()].reduce((p, c) => {
   const value = quarterHours.map((min) => `${c.toString().padStart(2, '0')}:${min}`);
   return [...p, ...value];
 }, []);
-class Scroll extends Component {
+export default class channels extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,19 +36,18 @@ class Scroll extends Component {
   }
 
   async loadMore() {
-    console.log('this.state.items', this.state.channels);
-
+    this.setState({ loading: true });
     const sIndex = this.state.channels.length ? this.state.channels.length - 1 : 0;
-    const eIndex = sIndex + 7;
-
+    const eIndex = sIndex + perPage;
     const response = await getChannels(sIndex, eIndex);
     const ids = [...this.state.channels, ...response.channels].map((channel) => channel.groupID);
-    const data = await getPrograms(ids);
-
+    const Channeldata = await getPrograms(ids);
+    this.setState({ loading: true });
     this.setState({
       channels: [...this.state.channels, ...response.channels],
       initialized: true,
-      programs: data,
+      programs: Channeldata,
+      loading:false
     });
   }
 
@@ -65,19 +62,6 @@ class Scroll extends Component {
           headings={times}
           programs={this.state.programs}
         />
-        {/* <ul>
-          {this.state.channels && this.state.channels.map((i, index) => (
-            <li>
-              <img
-                key={index}
-                src={`https://cdn.hd-plus.de/senderlogos/bright-cropped/${i.groupID}.png`}
-                alt={i.name}
-
-              />
-
-            </li>
-          ))}
-        </ul> */}
         {this.state.loading
           ? (
             <p className="App-intro">
@@ -91,4 +75,4 @@ class Scroll extends Component {
   }
 }
 
-export default Scroll;
+

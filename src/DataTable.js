@@ -1,10 +1,9 @@
 import * as React from 'react';
 import Cell from './Cell';
 import './DataTable.scss';
-
-export default class DataTable extends React.Component {
- renderHeadingRow = (_cell, cellIndex) => {
-    const {headings} = this.props;
+export default function DataTable(props) {
+const renderHeadingRow = (_cell, cellIndex) => {
+    const {headings} = props;
     return (
       <th className="Cell Cell-header">
         <div>{headings[cellIndex]}</div>
@@ -13,15 +12,14 @@ export default class DataTable extends React.Component {
     )
   };
 
-  renderRow = (program, rowIndex) => {
-    const {programs,headings} = this.props;
+  const renderRow = (program, rowIndex) => {
+    const {programs,headings} = props;
     const CURRENT_DATE=Object.keys(Object.values(programs)[0])[0];
     return (
       <tr key={`row-${rowIndex}`} id={`row-${rowIndex}`}>
       <td className="Cell Cell-fixed " scope="row">
       <img 
     src={`https://cdn.hd-plus.de/senderlogos/bright-cropped/${program}.png`}
-              //  sizes={window.innerWidth / 3.5}
        />
   </td>
   
@@ -45,23 +43,17 @@ export default class DataTable extends React.Component {
     )
   };
 
-  render() {
-    const {headings, programs} = this.props;
-    // let a = programs[Object.keys(Object.keys(programs)[0]])
-
-// console.log('rows',programs)
-    this.renderHeadingRow = this.renderHeadingRow.bind(this);
-    this.renderRow = this.renderRow.bind(this);
-    
+ 
+    const {headings, programs} = props;
     const theadMarkup = (
       <tr key="heading">
           <th className="Cell Cell-header Cell-fixed">Channels
      </th> 
-        {headings.map(this.renderHeadingRow)}
+        {headings.map(renderHeadingRow)}
       </tr>
     );
 
-    const tbodyMarkup = Object.keys(programs).map(this.renderRow);
+    const tbodyMarkup = Object.keys(programs).map(renderRow);
   
     return (
     //  <div className="DataTable" 
@@ -76,5 +68,5 @@ export default class DataTable extends React.Component {
         // </div>
     //  </div >
     );
-  }
+  
 }
