@@ -4,7 +4,7 @@ import './DataTable.scss';
 export default function DataTable({programs,headings}) {
 const renderHeadingRow = (_cell, cellIndex) => {
     return (
-      <th className="Cell Cell-header" key={cellIndex}>
+      <th className="Cell" key={cellIndex}>
         {_cell}
     </th>
     
@@ -40,7 +40,7 @@ const renderHeadingRow = (_cell, cellIndex) => {
 
     const theadMarkup = (
       <tr key="heading">
-          <th className="Cell Cell-header Cell-fixed">Channels
+          <th className="Cell ">Channels
      </th> 
         {headings.map(renderHeadingRow)}
       </tr>
@@ -49,17 +49,10 @@ const renderHeadingRow = (_cell, cellIndex) => {
     const tbodyMarkup = Object.keys(programs).map(renderRow);
   
     return (
-    //  <div className="DataTable" 
-    //  >
-        // <div className="ScrollContainer">
         <table className="Table">
-      
           <thead>{theadMarkup}</thead>
           <tbody>{tbodyMarkup}</tbody>
-         
         </table>
-        // </div>
-    //  </div >
     );
   
 }
