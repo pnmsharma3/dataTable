@@ -1,19 +1,17 @@
 import * as React from 'react';
 import Cell from './Cell';
 import './DataTable.scss';
-export default function DataTable(props) {
+export default function DataTable({programs,headings}) {
 const renderHeadingRow = (_cell, cellIndex) => {
-    const {headings} = props;
     return (
-      <th className="Cell Cell-header">
-        <div>{headings[cellIndex]}</div>
+      <th className="Cell Cell-header" key={cellIndex}>
+        {_cell}
     </th>
     
     )
   };
 
   const renderRow = (program, rowIndex) => {
-    const {programs,headings} = props;
     const CURRENT_DATE=Object.keys(Object.values(programs)[0])[0];
     return (
       <tr key={`row-${rowIndex}`} id={`row-${rowIndex}`}>
@@ -23,13 +21,10 @@ const renderHeadingRow = (_cell, cellIndex) => {
        />
   </td>
   
-  
-  
-        {headings.map((_cell, cellIndex) => {
+  {headings.map((_cell, cellIndex) => {
           let hours=_cell.split(':').toString();
           let Id =(new Date(parseInt(CURRENT_DATE)).setHours(hours[0],hours[1])).toString();
           let cellData=programs[program];
-          // console.log('cellData[Id]',cellData[Id])
           return (
             <Cell
               key={`${rowIndex}-${cellIndex}`}
@@ -43,8 +38,6 @@ const renderHeadingRow = (_cell, cellIndex) => {
     )
   };
 
- 
-    const {headings, programs} = props;
     const theadMarkup = (
       <tr key="heading">
           <th className="Cell Cell-header Cell-fixed">Channels

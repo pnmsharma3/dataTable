@@ -53,7 +53,7 @@ export default class channels extends Component {
 
   render() {
     return (
-      <div
+      <section
         className="Data-Table"
         ref="myscroll"
         style={{ height: '420px', overflow: 'auto' }}
@@ -70,7 +70,7 @@ export default class channels extends Component {
           )
           : ''}
 
-      </div>
+      </section>
     );
   }
 }
