@@ -10,7 +10,6 @@ import data from './data/1.json';
 //     ));
 
 export const getChannels = (sIndex, eIndex) => {
-  console.log('sIndex, eIndex', sIndex, eIndex);
   const channels = result.channels.slice(sIndex, eIndex);
   return { channels, totalChannels: result.channels.length };
 };

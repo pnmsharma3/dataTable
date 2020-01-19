@@ -16,7 +16,7 @@ export default class channels extends Component {
       channels: [],
       loading: false,
       initialized: false,
-      programs: [],
+      programs: {},
     };
   }
 
@@ -40,15 +40,15 @@ export default class channels extends Component {
     const sIndex = this.state.channels.length ? this.state.channels.length - 1 : 0;
     const eIndex = sIndex + perPage;
     const response = await getChannels(sIndex, eIndex);
-    const ids = [...this.state.channels, ...response.channels].map((channel) => channel.groupID);
+    const ids=response.channels.map((channel) => channel.groupID);
     const Channeldata = await getPrograms(ids);
     this.setState({ loading: true });
     this.setState({
       channels: [...this.state.channels, ...response.channels],
       initialized: true,
-      programs: Channeldata,
+      programs: {...this.state.programs,...Channeldata},
       loading:false
-    });
+    })
   }
 
   render() {
@@ -58,13 +58,13 @@ export default class channels extends Component {
         ref="myscroll"
         style={{ height: '420px', overflow: 'auto' }}
       >
-        <DataTable
+        {!!Object.keys(this.state.programs).length&&<DataTable
           headings={times}
           programs={this.state.programs}
-        />
+        />}
         {this.state.loading
           ? (
-            <p className="App-intro">
+            <p className="">
               loading ...
             </p>
           )
