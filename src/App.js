@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.scss';
 import logo from './hd-plus.jpg';
-import Channels from './Channels';
+import Channels from './channels';
 
 // import Channels from './channelswithHooks';
 
